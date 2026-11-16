@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="COSMOS: un recorrido educativo por la historia, los misterios y la exploración del universo.">
+  <title>COSMOS | Un viaje por el universo</title>
+
+  <!-- Tipografías externas: Fraunces para títulos y DM Sans para lectura -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================
+       1. PALETA Y CONFIGURACIÓN
+       ========================= */
+    :root {
+      --fondo: #0c101b;
+      --fondo-suave: #121827;
+      --tarjeta: #171f31;
+      --tarjeta-clara: #1d2940;
+      --texto: #f3f1f8;
+      --texto-suave: #aeb7c9;
+      --lavanda: #b8a7e8;
+      --azul: #8fb8d8;
+      --acento: #d7c6a5;
+      --borde: rgba(226, 231, 244, .12);
+      --sombra: 0 18px 45px rgba(0, 0, 0, .24);
+      --radio: 20px;
+      --ancho: 1160px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      background: var(--fondo);
+      color: var(--texto);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.7;
+    }
+    img { display: block; width: 100%; object-fit: cover; }
+    a { color: inherit; text-decoration: none; }
+    .contenedor { width: min(var(--ancho), calc(100% - 44px)); margin: auto; }
+    .etiqueta {
+      color: var(--lavanda);
+      text-transform: uppercase;
+      letter-spacing: .19em;
+      font-size: .72rem;
+      font-weight: 700;
+    }
+    .titulo-seccion {
+      font-family: "Fraunces", serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.12;
+      margin: 10px 0 14px;
+      letter-spacing: -.035em;
+    }
+    .introduccion { max-width: 650px; color: var(--texto-suave); }
+    .seccion { padding: 100px 0; }
+    .encabezado-seccion { margin-bottom: 38px; }
+
+    /* =========================
+       2. NAVEGACIÓN
+       ========================= */
+    .barra {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(12, 16, 27, .88);
+      border-bottom: 1px solid var(--borde);
+      backdrop-filter: blur(16px);
+    }
+    .nav-contenido {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .marca {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+    }
+    .marca-simbolo {
+      width: 34px; height: 34px;
+      display: grid; place-items: center;
+      border: 1px solid rgba(184, 167, 232, .65);
+      border-radius: 50%;
+      color: var(--lavanda);
+      font-size: 1.15rem;
+    }
+    .nav-enlaces { display: flex; align-items: center; gap: 27px; list-style: none; }
+    .nav-enlaces a {
+      color: var(--texto-suave);
+      font-size: .84rem;
+      transition: color .25s ease;
+    }
+    .nav-enlaces a:hover, .nav-enlaces a:focus-visible { color: var(--texto); }
+    .nav-enlaces .nav-contacto {
+      color: var(--fondo);
+      background: var(--lavanda);
+      padding: 10px 17px;
+      border-radius: 30px;
+      font-weight: 700;
+    }
+    .nav-enlaces .nav-contacto:hover { background: #d0c5ef; color: var(--fondo); }
+
+    /* =========================
+       3. PORTADA
+       ========================= */
+    .hero {
+      min-height: 690px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      isolation: isolate;
+      background:
+        linear-gradient(90deg, rgba(8, 12, 23, .94) 0%, rgba(8, 12, 23, .76) 43%, rgba(8, 12, 23, .18) 100%),
+        linear-gradient(0deg, var(--fondo) 0%, transparent 22%),
+        url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=2200&q=85") center 46% / cover;
+    }
+    .hero-contenido { max-width: 700px; padding: 110px 0 125px; }
+    .hero h1 {
+      font-family: "Fraunces", serif;
+      font-size: clamp(3.5rem, 8vw, 6.9rem);
+      line-height: .98;
+      letter-spacing: -.055em;
+      font-weight: 600;
+      margin: 22px 0;
+    }
+    .hero h1 span { color: var(--lavanda); }
+    .hero p { max-width: 560px; color: #d0d5e1; font-size: 1.05rem; }
+    .hero-acciones { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+    .boton {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 13px 21px; border-radius: 30px; font-size: .88rem;
+      font-weight: 700; transition: transform .25s ease, background .25s ease;
+    }
+    .boton:hover { transform: translateY(-3px); }
+    .boton-principal { color: #101321; background: var(--lavanda); }
+    .boton-secundario { border: 1px solid rgba(255,255,255,.4); color: white; }
+    .hero-nota {
+      display: flex; align-items: center; gap: 12px; margin-top: 58px;
+      color: #c5cada; font-size: .78rem; letter-spacing: .04em;
+    }
+    .hero-nota::before { content: ""; width: 38px; height: 1px; background: var(--lavanda); }
+
+    /* =========================
+       4. INTRODUCCIÓN / CIFRAS
+       ========================= */
+    .intro-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 65px; align-items: center; }
+    .intro-imagen { position: relative; }
+    .intro-imagen img { height: 440px; border-radius: var(--radio); }
+    .imagen-pie {
+      position: absolute; bottom: 18px; left: 18px;
+      padding: 9px 13px; border-radius: 30px;
+      background: rgba(12,16,27,.78); color: #e5e7ef; font-size: .72rem;
+      backdrop-filter: blur(8px);
+    }
+    .intro-texto p { color: var(--texto-suave); margin: 18px 0 25px; }
+    .cifras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+    .cifra { border-top: 1px solid var(--borde); padding-top: 15px; }
+    .cifra strong { display: block; color: var(--lavanda); font: 600 1.55rem "Fraunces", serif; }
+    .cifra span { color: var(--texto-suave); font-size: .75rem; }
+
+    /* =========================
+       5. HISTORIA
+       ========================= */
+    .historia { background: #101625; }
+    .linea-tiempo { display: grid; grid-template-columns: repeat(4, 1fr); gap: 17px; }
+    .evento {
+      padding: 24px 21px;
+      border: 1px solid var(--borde);
+      border-radius: 16px;
+      background: rgba(255,255,255,.025);
+      transition: transform .25s ease, border-color .25s ease;
+    }
+    .evento:hover { transform: translateY(-6px); border-color: rgba(184,167,232,.55); }
+    .evento .fecha { color: var(--lavanda); font-size: .78rem; font-weight: 700; letter-spacing: .08em; }
+    .evento h3 { font: 600 1.28rem "Fraunces", serif; margin: 12px 0 9px; }
+    .evento p { color: var(--texto-suave); font-size: .86rem; }
+
+    /* =========================
+       6. EXPLORAR EL COSMOS
+       ========================= */
+    .tarjetas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .tarjeta {
+      overflow: hidden; border: 1px solid var(--borde);
+      border-radius: var(--radio); background: var(--tarjeta);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .tarjeta:hover { transform: translateY(-7px); box-shadow: var(--sombra); }
+    .tarjeta img { height: 220px; transition: transform .5s ease; }
+    .tarjeta:hover img { transform: scale(1.045); }
+    .tarjeta-cuerpo { padding: 22px; }
+    .tarjeta-cuerpo .numero { color: var(--lavanda); font-size: .72rem; letter-spacing: .13em; font-weight: 700; }
+    .tarjeta h3 { font: 600 1.5rem "Fraunces", serif; margin: 7px 0 9px; }
+    .tarjeta p { color: var(--texto-suave); font-size: .87rem; }
+
+    /* =========================
+       7. PROBLEMAS Y SOLUCIONES
+       ========================= */
+    .retos { background: #101625; }
+    .retos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 17px; }
+    .reto {
+      display: grid; grid-template-columns: 100px 1fr; gap: 19px;
+      padding: 22px; border-radius: 17px; border: 1px solid var(--borde);
+      background: var(--tarjeta);
+    }
+    .reto-icono {
+      width: 100px; height: 100px; border-radius: 13px;
+      display: grid; place-items: center; overflow: hidden;
+      background: var(--tarjeta-clara); color: var(--lavanda);
+      font: 600 2rem "Fraunces", serif;
+    }
+    .reto h3 { font: 600 1.24rem "Fraunces", serif; margin-bottom: 5px; }
+    .reto p { color: var(--texto-suave); font-size: .83rem; }
+    .reto p strong { color: #d9cbed; }
+
+    /* =========================
+       8. CURIOSIDADES
+       ========================= */
+    .curiosidades-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 20px; }
+    .curiosidad-grande {
+      min-height: 390px; border-radius: var(--radio); overflow: hidden;
+      display: flex; align-items: end; padding: 30px;
+      background: linear-gradient(0deg, rgba(7,11,20,.92), rgba(7,11,20,.04) 75%),
+        url("https://images.unsplash.com/photo-1502134249126-9f3755a50d78?auto=format&fit=crop&w=1300&q=85") center / cover;
+    }
+    .curiosidad-grande h3 { font: 600 2rem "Fraunces", serif; margin: 8px 0; }
+    .curiosidad-grande p { color: #d2d6e1; max-width: 440px; font-size: .88rem; }
+    .datos-curiosos { display: grid; gap: 15px; }
+    .dato {
+      padding: 23px; border-radius: 16px; background: var(--tarjeta);
+      border: 1px solid var(--borde);
+    }
+    .dato strong { display: block; color: var(--lavanda); font: 600 1.55rem "Fraunces", serif; }
+    .dato p { color: var(--texto-suave); font-size: .84rem; }
+
+    /* =========================
+       9. CIERRE Y FOOTER
+       ========================= */
+    .cierre {
+      padding: 75px 0; text-align: center;
+      background: linear-gradient(135deg, #1b2035, #151d2d 65%, #20243a);
+      border-top: 1px solid var(--borde);
+    }
+    .cierre h2 { font: 600 clamp(2rem, 4vw, 3.2rem) "Fraunces", serif; margin: 12px auto; }
+    .cierre p { color: var(--texto-suave); max-width: 580px; margin: auto; }
+    footer { padding: 38px 0 25px; background: #090d16; }
+    .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 35px; padding-bottom: 28px; }
+    .footer-col h3 { font: 600 1.2rem "Fraunces", serif; margin-bottom: 12px; }
+    .footer-col p, .footer-col a { color: var(--texto-suave); font-size: .83rem; }
+    .footer-col a { display: block; width: fit-content; margin: 5px 0; transition: color .2s; }
+    .footer-col a:hover { color: var(--lavanda); }
+    .copyright {
+      border-top: 1px solid var(--borde); padding-top: 18px;
+      color: #778197; font-size: .72rem; text-align: center;
+    }
+
+    /* =========================
+       10. ADAPTACIÓN RESPONSIVE
+       ========================= */
+    @media (max-width: 900px) {
+      .nav-contenido { align-items: flex-start; flex-direction: column; padding: 17px 0; gap: 13px; }
+      .nav-enlaces { width: 100%; gap: 18px; overflow-x: auto; padding-bottom: 4px; }
+      .nav-enlaces a { white-space: nowrap; }
+      .hero { min-height: 620px; }
+      .intro-grid { gap: 35px; }
+      .linea-tiempo { grid-template-columns: repeat(2, 1fr); }
+      .tarjetas { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .contenedor { width: min(100% - 30px, var(--ancho)); }
+      .seccion { padding: 72px 0; }
+      .nav-enlaces { gap: 16px; }
+      .nav-enlaces a { font-size: .78rem; }
+      .hero { min-height: 620px; background-position: 58% center; }
+      .hero-contenido { padding: 90px 0; }
+      .hero h1 { font-size: clamp(3.2rem, 17vw, 5rem); }
+      .hero p { font-size: .94rem; }
+      .intro-grid, .curiosidades-grid { grid-template-columns: 1fr; }
+      .intro-imagen img { height: 300px; }
+      .cifras { gap: 8px; }
+      .cifra strong { font-size: 1.25rem; }
+      .cifra span { font-size: .68rem; }
+      .linea-tiempo, .tarjetas, .retos-grid { grid-template-columns: 1fr; }
+      .tarjeta img { height: 230px; }
+      .reto { grid-template-columns: 70px 1fr; gap: 14px; padding: 17px; }
+      .reto-icono { width: 70px; height: 70px; font-size: 1.5rem; }
+      .curiosidad-grande { min-height: 330px; padding: 22px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 23px; }
+    }
+
+    /* Respeta la preferencia de movimiento reducido del visitante */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navegación principal: los enlaces llevan a cada sección de la misma página -->
+  <header class="barra">
+    <div class="contenedor nav-contenido">
+      <a class="marca" href="#inicio" aria-label="COSMOS, volver al inicio">
+        <span class="marca-simbolo">✦</span> COSMOS
+      </a>
+      <nav aria-label="Navegación principal">
+        <ul class="nav-enlaces">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#historia">Historia</a></li>
+          <li><a href="#explorar">Explorar</a></li>
+          <li><a href="#retos">Retos espaciales</a></li>
+          <li><a href="#curiosidades">Curiosidades</a></li>
+          <li><a class="nav-contacto" href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Portada -->
+    <section class="hero" id="inicio">
+      <div class="contenedor">
+        <div class="hero-contenido">
+          <span class="etiqueta">Una mirada más allá de nuestro mundo</span>
+          <h1>El universo<br>no tiene <span>límites.</span></h1>
+          <p>Desde el nacimiento de las estrellas hasta los rincones más lejanos del cosmos, descubre la historia, la belleza y los misterios del espacio.</p>
+          <div class="hero-acciones">
+            <a class="boton boton-principal" href="#explorar">Comenzar el viaje ↗</a>
+            <a class="boton boton-secundario" href="#historia">Conocer su historia</a>
+          </div>
+          <div class="hero-nota">CIENCIA · HISTORIA · EXPLORACIÓN</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Introducción -->
+    <section class="seccion" aria-labelledby="sobre-cosmos">
+      <div class="contenedor intro-grid">
+        <div class="intro-imagen">
+          <img src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?auto=format&fit=crop&w=1200&q=85" alt="Cielo profundo lleno de estrellas y una nebulosa">
+          <span class="imagen-pie">Un universo por descubrir</span>
+        </div>
+        <div class="intro-texto">
+          <span class="etiqueta">Bienvenido a COSMOS</span>
+          <h2 class="titulo-seccion" id="sobre-cosmos">Un pequeño planeta en un universo inmenso.</h2>
+          <p>Vivimos en la Tierra, un mundo que forma parte del sistema solar, dentro de la Vía Láctea. Más allá de nuestro hogar existen miles de millones de galaxias, cada una con estrellas, planetas y preguntas que la ciencia continúa investigando.</p>
+          <p>Este espacio reúne conceptos esenciales para acercarnos a la astronomía y comprender cómo hemos aprendido a observar y explorar el universo.</p>
+          <div class="cifras">
+            <div class="cifra"><strong>13.8 mil M</strong><span>Edad estimada del universo</span></div>
+            <div class="cifra"><strong>8</strong><span>Planetas del sistema solar</span></div>
+            <div class="cifra"><strong>1</strong><span>Hogar que conocemos</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Historia del universo y exploración -->
+    <section class="seccion historia" id="historia">
+      <div class="contenedor">
+        <div class="encabezado-seccion">
+          <span class="etiqueta">De los primeros instantes a la exploración</span>
+          <h2 class="titulo-seccion">Una historia escrita en las estrellas.</h2>
+          <p class="introduccion">El universo ha cambiado durante miles de millones de años. Estos momentos ayudan a comprender su evolución y el camino que la humanidad ha recorrido para estudiarlo.</p>
+        </div>
+        <div class="linea-tiempo">
+          <article class="evento">
+            <span class="fecha">HACE 13.8 MIL MILLONES DE AÑOS</span>
+            <h3>El Big Bang</h3>
+            <p>El universo comenzó a expandirse desde un estado extremadamente caliente y denso. No fue una explosión en un lugar, sino la expansión del propio espacio.</p>
+          </article>
+          <article class="evento">
+            <span class="fecha">PRIMEROS CIENTOS DE MILLONES DE AÑOS</span>
+            <h3>Primeras estrellas</h3>
+            <p>La gravedad reunió gas y materia hasta formar las primeras estrellas. Con el tiempo, estas dieron lugar a elementos que después formarían nuevos sistemas.</p>
+          </article>
+          <article class="evento">
+            <span class="fecha">HACE 4.6 MIL MILLONES DE AÑOS</span>
+            <h3>Nace el sistema solar</h3>
+            <p>Una nube de gas y polvo colapsó y formó el Sol. El material restante se agrupó hasta dar origen a los planetas y otros cuerpos.</p>
+          </article>
+          <article class="evento">
+            <span class="fecha">1957 — ACTUALIDAD</span>
+            <h3>La era espacial</h3>
+            <p>El Sputnik 1 abrió la era de los satélites artificiales. Después llegaron los vuelos tripulados, las misiones lunares y los telescopios espaciales.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Temas básicos -->
+    <section class="seccion" id="explorar">
+      <div class="contenedor">
+        <div class="encabezado-seccion">
+          <span class="etiqueta">Conoce nuestro entorno cósmico</span>
+          <h2 class="titulo-seccion">Explora los grandes protagonistas.</h2>
+          <p class="introduccion">Cada objeto celeste cuenta una parte de la historia del universo. Acércate a algunos de los conceptos fundamentales de la astronomía.</p>
+        </div>
+
+        <div class="tarjetas">
+          <article class="tarjeta">
+            <img src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&w=900&q=85" alt="Planeta Tierra visto desde el espacio">
+            <div class="tarjeta-cuerpo">
+              <span class="numero">01 / NUESTRO HOGAR</span>
+              <h3>El sistema solar</h3>
+              <p>El Sol y los ocho planetas, junto con lunas, asteroides y cometas, forman nuestro vecindario cósmico.</p>
+            </div>
+          </article>
+
+          <article class="tarjeta">
+            <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=900&q=85" alt="Nebulosa brillante con nubes de gas y polvo">
+            <div class="tarjeta-cuerpo">
+              <span class="numero">02 / FÁBRICAS ESTELARES</span>
+              <h3>Estrellas y nebulosas</h3>
+              <p>Las estrellas producen energía mediante fusión nuclear. Las nebulosas son enormes nubes de gas y polvo, algunas de las cuales forman nuevas estrellas.</p>
+            </div>
+          </article>
+
+          <article class="tarjeta">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=85" alt="Cielo nocturno sobre montañas con estrellas">
+            <div class="tarjeta-cuerpo">
+              <span class="numero">03 / ISLAS DE ESTRELLAS</span>
+              <h3>Las galaxias</h3>
+              <p>Son enormes conjuntos de estrellas, gas, polvo y materia oscura unidos por la gravedad. Nuestra galaxia es la Vía Láctea.</p>
+            </div>
+          </article>
+
+          <article class="tarjeta">
+            <img src="https://images.unsplash.com/photo-1543722530-d2c3201371e7?auto=format&fit=crop&w=900&q=85" alt="Representación visual de un planeta en el espacio">
+            <div class="tarjeta-cuerpo">
+              <span class="numero">04 / MUNDOS LEJANOS</span>
+              <h3>Exoplanetas</h3>
+              <p>Son planetas que orbitan estrellas distintas al Sol. Su estudio ayuda a investigar cómo se forman los sistemas planetarios.</p>
+            </div>
+          </article>
+
+          <article class="tarjeta">
+            <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=900&q=85" alt="Región oscura y luminosa de una nebulosa">
+            <div class="tarjeta-cuerpo">
+              <span class="numero">05 / GRAVEDAD EXTREMA</span>
+              <h3>Agujeros negros</h3>
+              <p>Son regiones donde la gravedad es tan intensa que, dentro del horizonte de sucesos, ni siquiera la luz puede escapar.</p>
+            </div>
+          </article>
+
+          <article class="tarjeta">
+            <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=85" alt="La Tierra observada desde el espacio">
+            <div class="tarjeta-cuerpo">
+              <span class="numero">06 / EXPLORACIÓN</span>
+              <h3>La Tierra y el espacio</h3>
+              <p>Satélites y sondas permiten observar nuestro planeta, estudiar otros mundos y ampliar el conocimiento científico.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Desafíos -->
+    <section class="seccion retos" id="retos">
+      <div class="contenedor">
+        <div class="encabezado-seccion">
+          <span class="etiqueta">La exploración también enfrenta desafíos</span>
+          <h2 class="titulo-seccion">Problemas que impulsan soluciones.</h2>
+          <p class="introduccion">Viajar y trabajar en el espacio implica riesgos tecnológicos y humanos. La investigación busca reducirlos para hacer las misiones más seguras y sostenibles.</p>
+        </div>
+
+        <div class="retos-grid">
+          <article class="reto">
+            <div class="reto-icono" aria-hidden="true">01</div>
+            <div>
+              <h3>Basura espacial</h3>
+              <p>Los fragmentos de satélites y cohetes pueden chocar con equipos en órbita. <strong>Posibles soluciones:</strong> diseñar satélites que se desorbiten al terminar su vida útil, mejorar el seguimiento y desarrollar tecnologías de retirada de residuos.</p>
+            </div>
+          </article>
+          <article class="reto">
+            <div class="reto-icono" aria-hidden="true">02</div>
+            <div>
+              <h3>Radiación cósmica</h3>
+              <p>Fuera de la protección de la atmósfera y el campo magnético terrestre, la radiación supone un riesgo para las personas y los equipos. <strong>Posibles soluciones:</strong> refugios protegidos, materiales adecuados y monitoreo de radiación.</p>
+            </div>
+          </article>
+          <article class="reto">
+            <div class="reto-icono" aria-hidden="true">03</div>
+            <div>
+              <h3>Viajes prolongados</h3>
+              <p>Las misiones largas pueden afectar la salud física y emocional de los astronautas. <strong>Posibles soluciones:</strong> sistemas de soporte vital, ejercicio planificado, alimentación controlada y comunicación con la Tierra.</p>
+            </div>
+          </article>
+          <article class="reto">
+            <div class="reto-icono" aria-hidden="true">04</div>
+            <div>
+              <h3>Búsqueda de vida</h3>
+              <p>Aún no existe evidencia confirmada de vida fuera de la Tierra. <strong>Posibles soluciones:</strong> estudiar ambientes habitables, analizar muestras y buscar señales biológicas con instrumentos científicos cada vez más precisos.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curiosidades -->
+    <section class="seccion" id="curiosidades">
+      <div class="contenedor">
+        <div class="encabezado-seccion">
+          <span class="etiqueta">Pequeños datos, grandes preguntas</span>
+          <h2 class="titulo-seccion">¿Sabías que...?</h2>
+          <p class="introduccion">Algunos detalles del cosmos nos recuerdan lo extraordinario que es el universo y lo mucho que todavía queda por descubrir.</p>
+        </div>
+        <div class="curiosidades-grid">
+          <article class="curiosidad-grande">
+            <div>
+              <span class="etiqueta">Una ventana al pasado</span>
+              <h3>Mirar lejos es mirar atrás.</h3>
+              <p>La luz necesita tiempo para viajar. Por eso, cuando observamos objetos muy distantes, los vemos tal como eran cuando esa luz inició su recorrido.</p>
+            </div>
+          </article>
+          <div class="datos-curiosos">
+            <article class="dato">
+              <strong>8 minutos y 20 segundos</strong>
+              <p>Es aproximadamente el tiempo que tarda la luz del Sol en llegar a la Tierra.</p>
+            </article>
+            <article class="dato">
+              <strong>Más allá de lo visible</strong>
+              <p>El universo contiene materia y energía que no podemos observar directamente con nuestros ojos.</p>
+            </article>
+            <article class="dato">
+              <strong>Un cielo en movimiento</strong>
+              <p>Las estrellas parecen fijas en el cielo, pero se mueven por el espacio y cambian a lo largo de enormes periodos de tiempo.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cierre -->
+    <section class="cierre">
+      <div class="contenedor">
+        <span class="etiqueta">El conocimiento no tiene fronteras</span>
+        <h2>La próxima gran pregunta<br>puede comenzar contigo.</h2>
+        <p>Observar, preguntar e investigar son los primeros pasos para comprender el universo. Sigue explorando y mantén viva tu curiosidad.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pie de página: sustituye los datos de ejemplo por tu información -->
+  <footer id="contacto">
+    <div class="contenedor">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a class="marca" href="#inicio"><span class="marca-simbolo">✦</span> COSMOS</a>
+          <p style="margin-top: 14px; max-width: 290px;">Un viaje educativo por la historia, la ciencia y los misterios del universo.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Explora</h3>
+          <a href="#historia">Historia del universo</a>
+          <a href="#explorar">Conoce el cosmos</a>
+          <a href="#retos">Problemas y soluciones</a>
+          <a href="#curiosidades">Curiosidades</a>
+        </div>
+        <div class="footer-col">
+          <h3>Información de contacto</h3>
+          <p><strong>Desarrollador:</strong> Yaneth Serrano</p>
+          <p><strong>Correo:</strong> sofyane@gmail.com</p>
+          <p><strong>Ubicación:</strong> El Salvador</p>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook ↗</a>
+        </div>
+      </div>
+      <div class="copyright">© 2026 COSMOS · Proyecto educativo de astronomía · Diseñado con HTML y CSS.</div>
+    </div>
+  </footer>
+</body>
+</html>
